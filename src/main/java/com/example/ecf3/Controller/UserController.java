@@ -1,6 +1,9 @@
 package com.example.ecf3.Controller;
 
+import com.example.ecf3.Entity.Game;
+import com.example.ecf3.Entity.User;
 import com.example.ecf3.Exception.*;
+import com.example.ecf3.Service.GameService;
 import com.example.ecf3.Service.UserService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -16,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GameService gameService;
 
 
     @GetMapping("signin")
@@ -76,8 +84,11 @@ public class UserController {
 
     @GetMapping("profil/{id}")
     public ModelAndView getPorfil (@PathVariable("id")Integer id){
-        ModelAndView modelAndView = new ModelAndView("signup");
-        modelAndView.addObject("user",userService.findUserById(id));
+        ModelAndView modelAndView = new ModelAndView("profil");
+        User user = userService.findUserById(id);
+        modelAndView.addObject("user",user);
+        List<Game> gamesList = gameService.findAllgame(user);
+        modelAndView.addObject("gameList",gamesList.stream().filter(g -> g.getDateMatch().isAfter(LocalDate.now())).toList());
         return modelAndView;
     }
     @PostMapping("profil/{id}")
@@ -102,5 +113,4 @@ public class UserController {
         mv.addObject("message", ex.getMessage());
         return mv;
     }
-
 }

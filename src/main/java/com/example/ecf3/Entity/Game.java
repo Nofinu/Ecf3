@@ -29,7 +29,7 @@ public class Game {
     @Temporal(TemporalType.DATE)
     private LocalDate dateMatch;
 
-    @OneToOne(mappedBy = "match")
+    @OneToOne(fetch = FetchType.EAGER)
     private Result result;
 
 }

@@ -16,6 +16,7 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("homePage");
         modelAndView.addObject("isLogged",loginService.isLogged());
         modelAndView.addObject("userID", loginService.getUserId());
+        modelAndView.addObject("isAdmin",loginService.isAdmin());
         return modelAndView;
     }
 }

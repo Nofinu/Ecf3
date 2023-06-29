@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 @Service
 public class GameService {
@@ -30,5 +32,14 @@ public class GameService {
         Game game = Game.builder().player1(user1).player2(user2).dateMatch(LocalDate.parse(dateStr)).build();
         game = gameRepository.save(game);
         return game.getId()>0;
+    }
+
+    public List<Game> findAllgame(User user){
+        return gameRepository.findByPlayer1OrPlayer2(user,user);
+    }
+
+
+    public Game findById (int id){
+        return gameRepository.findById(id).get();
     }
 }

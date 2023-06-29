@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head.html :: head}"></head>
+<body>
+
+<div>
+  <div th:each="game : ${gameList}" class="card" style="width: 18rem;">
+    <div class="card-body">
+      <div th:text="${game.getPlayer1().getFirstName()}+' '+${game.getPlayer1().getLastName()}"></div>
+      <div th:text="${game.getPlayer2().getFirstName()}+' '+${game.getPlayer2().getLastName()}"></div>
+      <div th:text="${game.getDateMatch()}"></div>
+    </div>
+  </div>
+</div>
+
+<h3 th:if="${message != null}" th:text="${message}"></h3>
+<form action="" method="post">
+  <label for="firstName">FirstName :</label>
+  <input type="text" name="firstName" id="firstName" th:value="${user!=null}? ${user.getFirstName()}: ''">
+  <label for="lastName">LastName :</label>
+  <input type="text" name="lastName" id="lastName" th:value="${user!=null}? ${user.getLastName()}: ''">
+  <label for="email">Email :</label>
+  <input type="text" name="email" id="email" th:value="${user!=null}? ${user.getEmail()}: ''">
+  <label for="password">Password :</label>
+  <input type="password" name="password" id="password" th:value="${user!=null}? ${user.getPassword()}: ''">
+  <button>Register</button>
+</form>
+
+</body>
+</html>
