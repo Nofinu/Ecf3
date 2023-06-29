@@ -1,8 +1,6 @@
 package com.example.ecf3.Controller;
 
-import com.example.ecf3.Exeption.UserExistException;
-import com.example.ecf3.Exeption.UserNotExistException;
-import com.example.ecf3.Exeption.WrongPasswordException;
+import com.example.ecf3.Exception.*;
 import com.example.ecf3.Service.UserService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("user")
-public class LoginController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -57,9 +55,16 @@ public class LoginController {
     @PostMapping("signup")
     public String postSignUp(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) throws UserExistException, IOException, ExecutionControl.NotImplementedException {
         if(userService.signUp(firstName, lastName, email, password)) {
-            return "redirect:/user/signin";
+            return "redirect:/";
         }
         return null;
+    }
+
+    @GetMapping("logout")
+    public ModelAndView getSignOut (){
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        userService.logOut();
+        return modelAndView;
     }
 
     @ExceptionHandler(UserExistException.class)
@@ -68,4 +73,34 @@ public class LoginController {
         mv.addObject("message", ex.getMessage());
         return mv;
     }
+
+    @GetMapping("profil/{id}")
+    public ModelAndView getPorfil (@PathVariable("id")Integer id){
+        ModelAndView modelAndView = new ModelAndView("signup");
+        modelAndView.addObject("user",userService.findUserById(id));
+        return modelAndView;
+    }
+    @PostMapping("profil/{id}")
+    public ModelAndView postPorfil (@PathVariable("id")Integer id,@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) throws EmailAlreadyRegisterException, NotLoggedException, WrongUserException {
+        ModelAndView modelAndView = new ModelAndView();
+        if(userService.updateUser(id,firstName,lastName,email,password)){
+            modelAndView.setViewName("redirect:/");
+        }
+        return modelAndView;
+    }
+
+    @ExceptionHandler(EmailAlreadyRegisterException.class)
+    public ModelAndView handleEmailException(EmailAlreadyRegisterException ex) {
+        ModelAndView mv = new ModelAndView("signup");
+        mv.addObject("message", ex.getMessage());
+        return mv;
+    }
+
+    @ExceptionHandler(WrongUserException.class)
+    public ModelAndView handleWrongUser(WrongUserException ex) {
+        ModelAndView mv = new ModelAndView("signup");
+        mv.addObject("message", ex.getMessage());
+        return mv;
+    }
+
 }

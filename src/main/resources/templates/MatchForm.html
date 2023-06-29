@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head.html :: head}"></head>
+<body>
+<header th:replace="~{fragments/Header.html :: header}"></header>
+
+  <form action="" method="post" style="width: 70%">
+    <label for="p1">Player 1 :</label>
+    <select name="p1" id="p1" class="form-control" >
+      <option th:each="user : ${users}" th:text="${user.getLastName()}+' '+${user.getFirstName()}" th:value="${user.getId()}"></option>
+    </select>
+    <label for="p2">Player 2 :</label>
+    <select name="p2" id="p2" class="form-control">
+      <option th:each="user : ${users}" th:text="${user.getLastName()}+' '+${user.getFirstName()}" th:value="${user.getId()}"></option>
+    </select>
+    <label for="date">Date :</label>
+    <input type="date" name="date" id="date" class="form-control">
+    <button>add</button>
+  </form>
+
+</body>
+</html>

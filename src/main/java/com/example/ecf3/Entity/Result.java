@@ -15,7 +15,7 @@ public class Result {
     private int id;
 
     @OneToOne
-    private Match match;
+    private Game match;
 
     @OneToOne
     private User winner;

@@ -24,6 +24,13 @@ public class LoginService implements ILoginService {
         httpSession.setAttribute("isAdmin", user.isAdmin());
         httpSession.setAttribute("userId", user.getId());
         return true;    }
+    @Override
+    public boolean logout()  {
+        httpSession.setAttribute("isLogged", false);
+        httpSession.setAttribute("fullName", "");
+        httpSession.setAttribute("isAdmin", false);
+        httpSession.setAttribute("userId", null);
+        return true;    }
 
     @Override
     public boolean isLogged()  {
@@ -35,7 +42,7 @@ public class LoginService implements ILoginService {
 
     @Override
     public int getUserId()  {
-        return (int)httpSession.getAttribute("userId");
+        return httpSession.getAttribute ("userId")!=null? (int)httpSession.getAttribute("userId") : 0;
     }
 
     @Override

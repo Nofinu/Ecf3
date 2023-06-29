@@ -1,0 +1,16 @@
+
+<header>
+  <nav>
+    <div th:if="${isLogged}">
+      <a th:href="@{/user/profil/{id}(id = ${userID})}">Profil</a>
+      <a href="/user/logout" >Log Out</a>
+    </div>
+    <div th:if="${isAdmin}">
+      <a href="/match/form">Match</a>
+    </div>
+    <div th:unless="${isLogged}">
+      <a href="/user/signup" >Register</a>
+      <a href="/user/signin" >Sign In</a>
+    </div>
+  </nav>
+</header>

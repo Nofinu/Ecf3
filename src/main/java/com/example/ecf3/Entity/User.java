@@ -23,6 +23,6 @@ public class User {
     private String email;
     private String password;
     private boolean isAdmin;
-    @ManyToMany
-    private List<Match> matches;
+    @OneToMany
+    private List<Game> matches;
 }

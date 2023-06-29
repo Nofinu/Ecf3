@@ -2,9 +2,11 @@ package com.example.ecf3.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,17 +14,22 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Match {
+@Builder
+public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany(mappedBy = "matches",fetch = FetchType.EAGER)
-    private List<User> User;
+    @ManyToOne
+    private User player1;
+
+    @ManyToOne
+    private User player2;
 
     @Temporal(TemporalType.DATE)
-    private Date dateMatch;
+    private LocalDate dateMatch;
 
     @OneToOne(mappedBy = "match")
     private Result result;
+
 }

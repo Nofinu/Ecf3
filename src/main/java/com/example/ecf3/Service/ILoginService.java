@@ -5,6 +5,7 @@ import jdk.jshell.spi.ExecutionControl;
 
 public interface ILoginService {
     public boolean login(User user) ;
+    public boolean logout() ;
     public boolean isLogged() ;
 
     public boolean isAdmin() ;

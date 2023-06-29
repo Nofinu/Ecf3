@@ -1,4 +1,4 @@
-package com.example.ecf3.Exeption;
+package com.example.ecf3.Exception;
 
 public class UserExistException extends Exception{
     public UserExistException() {

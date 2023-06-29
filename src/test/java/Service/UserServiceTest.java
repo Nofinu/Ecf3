@@ -1,7 +1,7 @@
 package Service;
 
 import com.example.ecf3.Entity.User;
-import com.example.ecf3.Exeption.*;
+import com.example.ecf3.Exception.*;
 import com.example.ecf3.Repository.UserRepository;
 import com.example.ecf3.Service.ILoginService;
 import com.example.ecf3.Service.UserService;
@@ -14,9 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.client.HttpClientErrorException;
-
-import java.sql.SQLException;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -48,8 +45,9 @@ public class UserServiceTest {
         Mockito.when(userRepository.findByEmail("to@ta;com")).thenThrow(HibernateException.class);
         userService.setLoginService(loginService);
         User user = User.builder().firstName("toto").lastName("tata").email("to@ta.com").password("123").build();
-        Mockito.when(loginService.login(user)).thenReturn(true);
-        Mockito.when(userRepository.save(user)).thenReturn(User.builder().id(8).build());
+        User userSAved = User.builder().id(8).firstName("toto").lastName("tata").email("to@ta.com").password("123").build();
+        Mockito.when(userRepository.save(user)).thenReturn(User.builder().firstName("toto").lastName("tata").email("to@ta.com").password("123").id(8).build());
+        Mockito.when(loginService.login(userSAved)).thenReturn(true);
        Assertions.assertTrue(userService.signUp("toto","tata","to@ta.com","123"));
     }
 
@@ -63,7 +61,7 @@ public class UserServiceTest {
 
     @Test
     void testSignInWithUserExistExpetedTrue () throws ExecutionControl.NotImplementedException, UserNotExistException, WrongPasswordException {
-        Mockito.when(userRepository.findByEmail("to@ta.com")).thenReturn(User.builder().email("to@ta.com").password("123").build());
+        Mockito.when(userRepository.findByEmail("to@ta.com")).thenReturn(User.builder().id(5).isAdmin(false).firstName("toto").lastName("tata").email("to@ta.com").password("123").build());
         Assertions.assertTrue(userService.signIn("to@ta.com","123"));
     }
 
@@ -96,10 +94,11 @@ public class UserServiceTest {
     }
 
     @Test
-    void testUpdateExpetedTrue() throws ExecutionControl.NotImplementedException, UserNotExistException, WrongPasswordException, NotLoggedException, WrongUserException {
+    void testUpdateExpetedTrue() throws ExecutionControl.NotImplementedException, UserNotExistException, WrongPasswordException, NotLoggedException, WrongUserException, EmailAlreadyRegisterException {
         userService.setLoginService(loginService);
         Mockito.when(loginService.isLogged()).thenReturn(true);
         Mockito.when(loginService.getUserId()).thenReturn(1);
+        Mockito.when(userRepository.findByEmail("toto@tata.com")).thenThrow(new Exception());
         Assertions.assertTrue(userService.updateUser(1,"toto","tata","toto@tata.com","123"));
     }
 }

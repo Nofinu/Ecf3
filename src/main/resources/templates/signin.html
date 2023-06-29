@@ -3,11 +3,12 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
 
+<h3 th:if="${message != null}" th:text="${message}"></h3>
 <form action="" method="post">
     <label for="email">Email :</label>
     <input type="text" name="email" id="email">
     <label for="password">Password :</label>
-    <input type="text" name="password" id="password">
+    <input type="password" name="password" id="password">
     <button>Log In</button>
 </form>
 </body>
