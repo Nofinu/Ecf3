@@ -98,5 +98,4 @@ class Ecf3ApplicationTests {
 		Mockito.when(loginService.getUserId()).thenReturn(1);
 		Assertions.assertTrue(userService.updateUser(1,"toto","tata","toto@tata.com","123"));
 	}
-
 }
