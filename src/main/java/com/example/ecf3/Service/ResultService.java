@@ -37,4 +37,8 @@ public class ResultService {
 
         return result.getId()>0;
     }
+
+    public int countWin (User user){
+        return resultRepository.countByWinner(user);
+    }
 }

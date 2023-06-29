@@ -32,4 +32,5 @@ public class Game {
     @OneToOne(fetch = FetchType.EAGER)
     private Result result;
 
+
 }

@@ -25,4 +25,7 @@ public class User {
     private boolean isAdmin;
     @OneToMany
     private List<Game> matches;
+
+    @Transient
+    private int totalScore;
 }
