@@ -1,4 +1,4 @@
-package Entity;
+package com.example.ecf3.Entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,10 +1,10 @@
 package com.example.ecf3;
 
-import Entity.User;
-import Exeption.*;
-import Repository.UserRepository;
-import Service.ILoginService;
-import Service.UserService;
+import com.example.ecf3.Entity.User;
+import com.example.ecf3.Exeption.*;
+import com.example.ecf3.Repository.UserRepository;
+import com.example.ecf3.Service.ILoginService;
+import com.example.ecf3.Service.UserService;
 import jdk.jshell.spi.ExecutionControl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ class Ecf3ApplicationTests {
 	}
 
 	@Test
-	void testSignUpWithNewUserExpectedTrue () throws ExecutionControl.NotImplementedException {
+	void testSignUpWithNewUserExpectedTrue () throws ExecutionControl.NotImplementedException, UserExistException {
 		User user = User.builder().firstName("toto").lastName("tata").email("to@ta.com").password("123").build();
 		Mockito.when(userRepository.save(user)).thenReturn(new User());
 		Assertions.assertTrue(userService.signUp("toto","tata","to@ta.com","123"));

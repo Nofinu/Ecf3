@@ -1,18 +1,17 @@
 package Service.impl;
 
-import Entity.User;
-import Repository.UserRepository;
+import com.example.ecf3.Service.impl.LoginService;
 import jakarta.servlet.http.HttpSession;
 import jdk.jshell.spi.ExecutionControl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Answers;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-
+@ExtendWith(MockitoExtension.class)
 public class LoginServiceTest {
     private LoginService loginService;
 

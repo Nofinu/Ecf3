@@ -1,9 +1,8 @@
-package Service;
+package com.example.ecf3.Service;
 
-import Entity.User;
-import Exeption.*;
-import Repository.UserRepository;
-import Service.impl.LoginService;
+import com.example.ecf3.Entity.User;
+import com.example.ecf3.Exeption.*;
+import com.example.ecf3.Repository.UserRepository;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,19 +25,21 @@ public class UserService {
         this.loginService = loginService;
     }
 
-    public boolean signUp(String firstName, String lastName, String email, String password) throws ExecutionControl.NotImplementedException {
+    public boolean signUp(String firstName, String lastName, String email, String password) throws UserExistException {
         try {
             userRepository.findByEmail(email);
-            throw new UserExistException();
         }
         catch (Exception ex) {
             User user = User.builder().firstName(firstName).lastName(lastName).email(email).password(password).build();
             userRepository.save(user);
+            loginService.login(user);
             return user.getId() > 0;
         }
+        throw new UserExistException();
+
     }
 
-    public boolean signIn(String email, String password) throws UserNotExistException,WrongPasswordException {
+    public boolean signIn(String email, String password) throws UserNotExistException, WrongPasswordException {
         try {
             User user = userRepository.findByEmail(email);
             if(user.getPassword().equals(password)) {
