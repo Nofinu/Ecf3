@@ -4,11 +4,13 @@ import Entity.User;
 import Service.ILoginService;
 import jakarta.servlet.http.HttpSession;
 import jdk.jshell.spi.ExecutionControl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService implements ILoginService {
 
+    @Autowired
     private HttpSession httpSession;
 
     public void setHttpSession(HttpSession httpSession) {
