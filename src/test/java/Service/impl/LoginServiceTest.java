@@ -14,7 +14,7 @@ public class LoginServiceTest {
     private LoginService loginService;
 
     @BeforeEach
-    void setup (){
+    void setUp (){
         loginService = new LoginService();
     }
 
