@@ -17,26 +17,27 @@ public class LoginService implements ILoginService {
 
     @Override
     public boolean login(User user) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("not implemented");
-    }
+        httpSession.setAttribute("isLogged", true);
+        httpSession.setAttribute("fullName", user.getFirstName() + " "+user.getLastName());
+        httpSession.setAttribute("isAdmin", user.isAdmin());
+        httpSession.setAttribute("userId", user.getId());
+        return true;    }
 
     @Override
     public boolean isLogged() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("not implemented");
-    }
+        return httpSession.getAttribute("isLogged") != null && (boolean)httpSession.getAttribute("isLogged") ;    }
 
     @Override
     public boolean isAdmin() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("not implemented");
-    }
+        return httpSession.getAttribute("isAdmin") != null && (boolean)httpSession.getAttribute("isAdmin");    }
 
     @Override
     public int getUserId() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("not implemented");
+        return (int)httpSession.getAttribute("userId");
     }
 
     @Override
     public String getUserFullname() throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("not implemented");
+        return (String)httpSession.getAttribute("fullName");
     }
 }
