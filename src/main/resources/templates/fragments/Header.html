@@ -6,21 +6,21 @@
         <a href="/" style="text-decoration: none;font-size: 25px" class="text-light mx-2" ><i class="bi bi-trophy text-light"></i> EchecRanking</a>
       </div>
       <div th:if="${isLogged}">
-        <a th:href="@{/user/profil/{id}(id = ${userID})}" class="btn btn-outline-info">Profil</a>
-        <a th:href="@{/match}" class="btn btn-outline-info">Match List</a>
-        <a th:href="@{/ranking}" class="btn btn-outline-info mr-2">Ranking</a>
+        <a th:href="@{/user/profil/{id}(id = ${userID})}" class="btn btn-outline-info"><i class="bi bi-person-bounding-box text-light"></i> Profil</a>
+        <a th:href="@{/match}" class="btn btn-outline-info"><i class="bi bi-card-list text-light"></i> Match List</a>
+        <a th:href="@{/ranking}" class="btn btn-outline-info mr-2"><i class="bi bi-trophy-fill text-light"></i> Ranking</a>
       </div>
       <div th:if="${isAdmin}">
-        <a href="/match/form" class="btn btn-outline-info">Match</a>
+        <a href="/match/form" class="btn btn-outline-info"><i class="bi bi-plus-square text-light"></i> Match</a>
       </div>
     </div>
 
     <div th:unless="${isLogged}">
-      <a href="/user/signup" class="btn btn-outline-info">Register</a>
-      <a href="/user/signin" class="btn btn-outline-info">Sign In</a>
+      <a href="/user/signup" class="btn btn-outline-info"><i class="bi bi-box-arrow-in-right text-light"></i> Register</a>
+      <a href="/user/signin" class="btn btn-outline-info"><i class="bi bi-box-arrow-in-right text-light"></i> Sign In</a>
     </div>
     <div th:if="${isLogged}">
-      <a href="/user/logout" class="btn btn-outline-info">Log Out</a>
+      <a href="/user/logout" class="btn btn-outline-info"><i class="bi bi-box-arrow-left text-light"></i> Log Out</a>
     </div>
 
   </nav>
