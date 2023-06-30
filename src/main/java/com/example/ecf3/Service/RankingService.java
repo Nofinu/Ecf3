@@ -28,7 +28,22 @@ public class RankingService {
                 int wins = resultService.countWin(u);
                 u.setTotalScore(wins);
             }
-            return userList.stream().sorted(Comparator.comparingInt(User::getTotalScore)).toList();
+            userList = userList.stream().sorted(Comparator.comparingInt(User::getTotalScore).reversed()).toList();
+            int cpt = 1;
+            for (User u:userList) {
+                u.setRanking(cpt++);
+            }
+            return userList;
+        }
+        throw new NotLoggedException();
+    }
+
+    public User getUserRanking (int userId) throws NotLoggedException {
+        if(loginService.isLogged()){
+            User user = userService.findUserById(userId);
+            List<User> userList = getRanking();
+            int userIndex = userList.indexOf(user);
+            return userList.get(userIndex);
         }
         throw new NotLoggedException();
     }

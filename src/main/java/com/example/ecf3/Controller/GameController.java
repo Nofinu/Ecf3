@@ -60,6 +60,9 @@ public class GameController {
             User user = userService.findUserById(loginService.getUserId());
             List<Game> games = gameService.findAllgame(user);
             modelAndView.addObject("games",games);
+            modelAndView.addObject("isLogged",loginService.isLogged());
+            modelAndView.addObject("userID", loginService.getUserId());
+            modelAndView.addObject("isAdmin",loginService.isAdmin());
             modelAndView.setViewName("GamePage");
         }
         return modelAndView;

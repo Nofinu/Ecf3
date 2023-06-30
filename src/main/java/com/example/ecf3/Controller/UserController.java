@@ -4,7 +4,9 @@ import com.example.ecf3.Entity.Game;
 import com.example.ecf3.Entity.User;
 import com.example.ecf3.Exception.*;
 import com.example.ecf3.Service.GameService;
+import com.example.ecf3.Service.RankingService;
 import com.example.ecf3.Service.UserService;
+import com.example.ecf3.Service.impl.LoginService;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,12 @@ public class UserController {
 
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private LoginService loginService;
+
+    @Autowired
+    private RankingService rankingService;
 
 
     @GetMapping("signin")
@@ -83,12 +91,15 @@ public class UserController {
     }
 
     @GetMapping("profil/{id}")
-    public ModelAndView getPorfil (@PathVariable("id")Integer id){
+    public ModelAndView getPorfil (@PathVariable("id")Integer id) throws NotLoggedException {
         ModelAndView modelAndView = new ModelAndView("profil");
-        User user = userService.findUserById(id);
-        modelAndView.addObject("user",user);
+        User user = rankingService.getUserRanking(id);
         List<Game> gamesList = gameService.findAllgame(user);
         modelAndView.addObject("gameList",gamesList.stream().filter(g -> g.getDateMatch().isAfter(LocalDate.now())).toList());
+        modelAndView.addObject("user",user);
+        modelAndView.addObject("isLogged",loginService.isLogged());
+        modelAndView.addObject("userID", loginService.getUserId());
+        modelAndView.addObject("isAdmin",loginService.isAdmin());
         return modelAndView;
     }
     @PostMapping("profil/{id}")

@@ -3,8 +3,9 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
 <header th:replace="~{fragments/Header.html :: header}"></header>
-
-  <form action="" method="post" style="width: 70%">
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <h2>Create Match</h2>
+  <form action="" method="post" style="width: 70%" class="d-flex flex-column justify-content-center">
     <label for="p1">Player 1 :</label>
     <select name="p1" id="p1" class="form-control" >
       <option th:each="user : ${users}" th:text="${user.getLastName()}+' '+${user.getFirstName()}" th:value="${user.getId()}"></option>
@@ -15,8 +16,11 @@
     </select>
     <label for="date">Date :</label>
     <input type="date" name="date" id="date" class="form-control">
-    <button>add</button>
+    <button class="btn btn-info mt-2">Create Match</button>
   </form>
+</div>
+
+
 
 </body>
 </html>

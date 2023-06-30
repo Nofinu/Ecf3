@@ -19,6 +19,6 @@ public class Result {
     @OneToOne
     private Game game;
 
-    @OneToOne
+    @ManyToOne
     private User winner;
 }

@@ -4,29 +4,42 @@
 <body>
 <header th:replace="~{fragments/Header.html :: header}"></header>
 
-<div>
-  <div th:each="game : ${games}" class="card" style="width: 18rem;">
-    <div class="card-body">
-      <div th:text="${game.getPlayer1().getFirstName()}+' '+${game.getPlayer1().getLastName()}"></div>
-      <div th:text="${game.getPlayer2().getFirstName()}+' '+${game.getPlayer2().getLastName()}"></div>
-      <div th:text="${game.getDateMatch()}"></div>
 
-      <form action="" method="post" th:if="${game.getResult() == null}">
-        <input hidden="hidden" th:value="${game.getId()}" name="id">
-        <label for="winner">Winner :</label>
-        <select name="winner" id="winner">
-          <option th:value="${game.getPlayer1().getId()}" th:text="${game.getPlayer1().getFirstName()}+' '+${game.getPlayer1().getLastName()}"></option>
-          <option th:value="${game.getPlayer2().getId()}" th:text="${game.getPlayer2().getFirstName()}+' '+${game.getPlayer2().getLastName()}"></option>
-        </select>
-        <button>Send</button>
-      </form>
+<div class="d-flex flex-column align-items-center">
+  <div th:if="${isLogged}" class="row" style="width: 90%;margin-top: 35px">
+    <div class="col-4" th:each="game : ${games}">
+      <div class="card my-1" >
+        <div class="card-body">
+          <div class="d-flex flex-column justify-content-between">
+            <h4 th:text="'game n°'+${game.getId()}"></h4>
+            <div th:text="${game.getPlayer1().getFirstName()}+' '+${game.getPlayer1().getLastName()}"></div>
+            <div th:text="${game.getPlayer2().getFirstName()}+' '+${game.getPlayer2().getLastName()}"></div>
+            <div th:text="${game.getDateMatch()}"></div>
 
-      <div th:unless="${game.getResult() == null}" th:text="'Winner : '+ ${game.getResult().getWinner().getFirstName()}+' '+${game.getResult().getWinner().getLastName()}">
+            <form action="" method="post" th:if="${game.getResult() == null}">
+              <input hidden="hidden" th:value="${game.getId()}" name="id">
+              <label for="winner">Winner :</label>
+              <select name="winner" id="winner">
+                <option th:value="${game.getPlayer1().getId()}" th:text="${game.getPlayer1().getFirstName()}+' '+${game.getPlayer1().getLastName()}"></option>
+                <option th:value="${game.getPlayer2().getId()}" th:text="${game.getPlayer2().getFirstName()}+' '+${game.getPlayer2().getLastName()}"></option>
+              </select>
+              <button>Send</button>
+            </form>
 
+            <div th:unless="${game.getResult() == null}" th:text="'Winner : '+ ${game.getResult().getWinner().getFirstName()}+' '+${game.getResult().getWinner().getLastName()}">
+
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
+</div>
+
+
+
 
 </body>
 </html>
